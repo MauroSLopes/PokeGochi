@@ -6,7 +6,7 @@ namespace PokeGochi.Menu.CreatePokemon
 {
     internal class ApiRequest
     {
-        public static Pokemon.Pokemon GetPokemon(string pokemonName)
+        public static Pokemon.PokemonObject GetPokemon(string pokemonName)
         {
             var client = new RestClient($"https://pokeapi.co/api/v2/pokemon-species/{pokemonName}/");
             RestRequest request = new RestRequest("", Method.Get);
@@ -14,7 +14,7 @@ namespace PokeGochi.Menu.CreatePokemon
 
             var content = response.Content;
 
-            Pokemon.Pokemon newPokemon = JsonSerializer.Deserialize<Pokemon.Pokemon>(content);
+            Pokemon.PokemonObject newPokemon = JsonSerializer.Deserialize<Pokemon.PokemonObject>(content);
 
             return newPokemon;
         }

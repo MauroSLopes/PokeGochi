@@ -11,5 +11,12 @@ namespace PokeGochi.Pokemon
     {
         [JsonPropertyName("flavor_text")]
         public string text {  get; set; }
+
+        public FlavorText() { }
+
+        public FlavorText(string text)
+        {
+            this.text = text;
+        }
     }
 }
