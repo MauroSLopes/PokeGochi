@@ -1,6 +1,6 @@
 ﻿using PokeGochi.Pokemon;
 
-namespace PokeGochi.SaveManagement
+namespace PokeGochi.Controller.SaveManagement
 {
     internal class VerifyArchive
     {
@@ -8,9 +8,10 @@ namespace PokeGochi.SaveManagement
 
         public static PokemonObject ReadSave()
         {
-            if (File.Exists(tamagochiSave)) {
+            if (File.Exists(tamagochiSave))
+            {
                 string[] content = File.ReadAllLines(tamagochiSave);
-                var pO = new PokemonObject(content[0], int.Parse(content[1]), new List<FlavorText>() { new FlavorText(content[2]) });
+                var pO = new PokemonObject(content[0], content[1], int.Parse(content[2]), new List<FlavorText>() { new FlavorText(content[3]) });
                 return pO;
             }
 
@@ -19,7 +20,7 @@ namespace PokeGochi.SaveManagement
 
         public static void WriteSave(PokemonObject pO)
         {
-            string[] content = { pO.Name, pO.Id.ToString(), pO.flavorText };
+            string[] content = { pO.Owner, pO.Name, pO.Id.ToString(), pO.flavorText };
             File.WriteAllLines(tamagochiSave, content);
         }
 

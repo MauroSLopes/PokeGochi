@@ -1,24 +1,23 @@
 ﻿using PokeGochi.Pokemon;
-using PokeGochi.Menu.CreatePokemon;
+using PokeGochi.Menu;
 
-namespace PokeGochi.Menu.CreatePokemon
+namespace PokeGochi.Controller.CreatePokemon
 {
-    internal class CreatePokemonMenu : MenuBase
+    internal class CreatePokemonMenu
     {
-        // Para adicionar mais tipos de opção basta adicionar mais pokemons.
+        // Para adicionar mais tipos de opção basta adicionar mais entradas na lista.
 
-        Dictionary<string, string> availablePokemons = new Dictionary<string, string>() {
+        private static Dictionary<string, string> availablePokemons = new Dictionary<string, string>() {
             { "1", "Charmander" }, { "2", "Bulbasaur"}, {"3", "Squirtle"},
             { "4", "Arceus" }, {"5", "Rhyperior"}, {"6", "Lugia"},
             { "7", "Torchic"}, {"8", "Koraidon"}, { "9", "Riolu"}
         };
 
-        public Pokemon.PokemonObject EscolherPokemon()
+        public static PokemonObject EscolherPokemon()
         {
             while (true)
             {
-                WelcomeMensage();
-
+            
                 // Mostra todas as opções de pokemons.
                 // Feito desse jeito para que o menu seja expansivo.
 
@@ -39,7 +38,7 @@ namespace PokeGochi.Menu.CreatePokemon
                     // Confirma a opção requisitada.
 
                     Console.Clear();
-                    Pokemon.PokemonObject newPokemon = ApiRequest.GetPokemon(availablePokemons[opcao]);
+                    PokemonObject newPokemon = ApiRequest.GetPokemon(availablePokemons[opcao]);
                     Console.WriteLine(newPokemon.ToString());
                     Console.WriteLine("----------------");
                     Console.WriteLine($"Deseja adotar o {newPokemon.Name}?\n S - Sim. N - Não");
@@ -48,7 +47,9 @@ namespace PokeGochi.Menu.CreatePokemon
                     switch (resposta.ToLower()[0])
                     {
                         case 's':
-                            Console.WriteLine("Parabéns por encontrar seu parceiro de aventuras! Espero que vocês dois se divirtam muito juntos!");
+                            Console.WriteLine("Parabéns por encontrar seu parceiro de aventuras! Mas... Qual o seu nome mesmo?");
+                            string ownerName = Console.ReadLine();
+                            newPokemon.Owner = ownerName;
                             return newPokemon;
                             break;
                         case 'n':
@@ -58,14 +59,6 @@ namespace PokeGochi.Menu.CreatePokemon
                     }
                 }
             }
-        }
-
-        public override void WelcomeMensage()
-        {
-            base.WelcomeMensage();
-            Console.WriteLine("Pronto para escolher seu primeiro pokemon?");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("Opções:");
         }
     }
 }

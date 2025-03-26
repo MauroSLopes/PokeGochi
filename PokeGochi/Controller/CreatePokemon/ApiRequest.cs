@@ -2,11 +2,11 @@
 using System.Text.Json;
 using PokeGochi.Pokemon;
 
-namespace PokeGochi.Menu.CreatePokemon
+namespace PokeGochi.Controller.CreatePokemon
 {
     internal class ApiRequest
     {
-        public static Pokemon.PokemonObject GetPokemon(string pokemonName)
+        public static PokemonObject GetPokemon(string pokemonName)
         {
             var client = new RestClient($"https://pokeapi.co/api/v2/pokemon-species/{pokemonName}/");
             RestRequest request = new RestRequest("", Method.Get);
@@ -14,7 +14,7 @@ namespace PokeGochi.Menu.CreatePokemon
 
             var content = response.Content;
 
-            Pokemon.PokemonObject newPokemon = JsonSerializer.Deserialize<Pokemon.PokemonObject>(content);
+            PokemonObject newPokemon = JsonSerializer.Deserialize<PokemonObject>(content);
 
             return newPokemon;
         }
