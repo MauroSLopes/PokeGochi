@@ -1,4 +1,6 @@
-﻿using PokeGochi.Pokemon;
+﻿using PokeGochi.Controller.CreatePokemon;
+using PokeGochi.Model;
+using PokeGochi.Pokemon;
 
 namespace PokeGochi.Controller.SaveManagement
 {
@@ -6,22 +8,25 @@ namespace PokeGochi.Controller.SaveManagement
     {
         private static readonly string tamagochiSave = "tamagochiSave.txt";
 
-        public static PokemonObject ReadSave()
+        public static Mascot ReadSave()
         {
-            if (File.Exists(tamagochiSave))
-            {
+            try {
+                
                 string[] content = File.ReadAllLines(tamagochiSave);
-                var pO = new PokemonObject(content[0], content[1], int.Parse(content[2]), new List<FlavorText>() { new FlavorText(content[3]) });
-                return pO;
+
+                Mascot pokemon = new Mascot(ApiRequest.GetPokemon(content[0]), content[1], content[2], int.Parse(content[3]), int.Parse(content[4]));
+                return pokemon;
+
+            } catch (Exception ex)
+            {
+                return null;
             }
 
-            return null;
         }
 
-        public static void WriteSave(PokemonObject pO)
+        public static void WriteSave(Mascot pokemon)
         {
-            string[] content = { pO.Owner, pO.Name, pO.Id.ToString(), pO.flavorText };
-            File.WriteAllLines(tamagochiSave, content);
+            File.WriteAllLines(tamagochiSave, pokemon.mascotData());
         }
 
     }

@@ -2,6 +2,7 @@
 using PokeGochi.Controller.SaveManagement;
 using PokeGochi.View;
 using PokeGochi.Controller.CreatePokemon;
+using PokeGochi.Model;
 
 namespace PokeGochi.Controller
 {
@@ -9,13 +10,12 @@ namespace PokeGochi.Controller
     {
         public void Play()
         {
-            PokemonObject pokemon = VerifyArchive.ReadSave();
+            Mascot pokemon = VerifyArchive.ReadSave();
 
             GameLoopMenu gameLoopMenu = new GameLoopMenu();
 
             if (pokemon == null)
             {
-                gameLoopMenu.AdotarPet();
                 pokemon = CreatePokemonMenu.EscolherPokemon();
 
                 VerifyArchive.WriteSave(pokemon);
@@ -23,9 +23,28 @@ namespace PokeGochi.Controller
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(pokemon.ToString());
+                try { 
+                int opcao = int.Parse(gameLoopMenu.MenuInteracao());
+
+                switch (opcao) {
+                    case 1: pokemon.BrincarPokemon(); break;
+                    case 2: pokemon.AlimentarPokemon(); break;
+                    case 3: pokemon.VerificarPokemon(); break;
+                    case 4:
+                        gameLoopMenu.GoodByeMensage();
+                        return; 
+                    break;
+                    default:
+                        Console.WriteLine("Opção invalida.");
+                    break;
+                }
+
                 Console.ReadLine();
+                }
+                catch
+                {
+                    continue;
+                }
             }
         }
     }
