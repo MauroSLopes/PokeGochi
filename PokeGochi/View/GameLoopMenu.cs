@@ -5,24 +5,18 @@ namespace PokeGochi.View
 {
     internal class GameLoopMenu : MenuBase
     {
-        public void AdotarPet()
-        {
-            WelcomeMensage();
-            Console.WriteLine("Pronto para escolher seu primeiro pokemon?");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("Opções:");
-        }
 
-        public string MenuInteracao()
+        public int MenuInteracao()
         {
             WelcomeMensage();
             Console.WriteLine("------------------------------------------");
             Console.WriteLine("O que deseja fazer?");
             Console.WriteLine("1 - Brincar");
             Console.WriteLine("2 - Comer");
-            Console.WriteLine("3 - Observar");
-            Console.WriteLine("4 - Sair");
-            return Console.ReadLine();
+            Console.WriteLine("3 - Convesar");
+            Console.WriteLine("4 - Observar");
+            Console.WriteLine("5 - Sair");
+            return int.Parse(Console.ReadLine());
         }
     }
 }

@@ -10,6 +10,10 @@ namespace PokeGochi.Controller
     {
         public void Play()
         {
+
+            // Garante a leitura do arquivo, caso não existente retorna nulo.
+            // Garante a criação de um novo pokemon em caso de arquivo corrompido ou modificado de forma errada.
+
             Mascot pokemon = VerifyArchive.ReadSave();
 
             GameLoopMenu gameLoopMenu = new GameLoopMenu();
@@ -23,21 +27,26 @@ namespace PokeGochi.Controller
 
             while (true)
             {
+                // Protege contra opções invalidas, evita crashs na aplicação devido a inputs errados.
                 try { 
-                int opcao = int.Parse(gameLoopMenu.MenuInteracao());
+                int opcao = gameLoopMenu.MenuInteracao();
 
                 switch (opcao) {
-                    case 1: pokemon.BrincarPokemon(); break;
-                    case 2: pokemon.AlimentarPokemon(); break;
-                    case 3: pokemon.VerificarPokemon(); break;
-                    case 4:
-                        gameLoopMenu.GoodByeMensage();
-                        return; 
-                    break;
-                    default:
-                        Console.WriteLine("Opção invalida.");
-                    break;
-                }
+                        case 1: 
+                            pokemon.BrincarPokemon(); break;
+                        case 2: 
+                            pokemon.AlimentarPokemon(); break;
+                        case 3:
+                            pokemon.ConversarPokemon(); break;
+                        case 4:
+                            pokemon.VerificarPokemon(); break;
+                        case 5:
+                            gameLoopMenu.GoodByeMensage();
+                            VerifyArchive.WriteSave(pokemon);
+                            return; break;
+                        default:
+                            Console.WriteLine("Opção invalida."); break;
+                    }
 
                 Console.ReadLine();
                 }
